@@ -1,6 +1,8 @@
-package com.bnt.entity;
+package com.bnt.response;
 
 import java.util.List;
+
+import com.bnt.entity.AssignTest;
 
 public class EmployeeResponse {
 

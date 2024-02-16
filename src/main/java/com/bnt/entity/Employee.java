@@ -1,16 +1,10 @@
 package com.bnt.entity;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,9 +27,7 @@ public class Employee {
 
 	@Column(name = "password")
 	private String password;
-
-	@ManyToMany(mappedBy = "employees", cascade = CascadeType.ALL)
-	private List<AssignTest> assignTests;
+	
 
 	public Employee() {
 		super();
@@ -79,14 +71,6 @@ public class Employee {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public List<AssignTest> getAssignTests() {
-		return assignTests;
-	}
-
-	public void setAssignTests(List<AssignTest> assignTests) {
-		this.assignTests = assignTests;
 	}
 
 }
