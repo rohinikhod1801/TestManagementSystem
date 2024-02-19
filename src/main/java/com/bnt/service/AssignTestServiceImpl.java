@@ -3,10 +3,12 @@ package com.bnt.service;
 import java.util.List;
 
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.bnt.ResponseDTO.Tests;
+import com.bnt.ResponseDTO.QuestionsTest;
 import com.bnt.entity.AssignTest;
 import com.bnt.entity.Employee;
 import com.bnt.repository.EmployeeRepository;
@@ -34,22 +36,41 @@ public class AssignTestServiceImpl implements AssignTestService {
 	public AssignTest takeTest(Long employeeId, Long testId) {
 		Employee employee = employeeRepository.findById(employeeId).orElse(null);
 
-		if (employee == null) {
-			throw new RuntimeException("Employee with ID " + employeeId + " not found.");
-		}
+	    if (employee == null) {
+	        throw new RuntimeException("Employee with ID " + employeeId + " not found.");
+	    }
 
-		Tests test = restTemplate.exchange("http://localhost:8080/tests/" + testId, HttpMethod.GET, null, Tests.class)
-				.getBody();
+	    ResponseEntity<QuestionsTest[]> responseEntity = restTemplate.exchange(
+	            "http://localhost:8080/addQuestionsTest/" + testId,
+	            HttpMethod.GET,
+	            null,
+	            QuestionsTest[].class
+	    );
 
-		if (test == null) {
-			throw new RuntimeException("Test with ID " + testId + " not found.");
-		}
+	    if (responseEntity.getStatusCode() != HttpStatus.OK) {
+	        throw new RuntimeException("Failed to retrieve questions for test with ID " + testId);
+	    }
 
-		AssignTest assignTest = new AssignTest();
-		assignTest.setEmployeeId(employee.getEmployeeId());
-		assignTest.setTestId(test.getTestId());
+	    QuestionsTest[] tests = responseEntity.getBody();
+	    if (tests == null || tests.length == 0) {
+	        throw new RuntimeException("No questions found for test with ID " + testId);
+	    }
 
-		return assignTestRepository.save(assignTest);
+	    // For simplicity, just take the first QuestionsTest object
+	    QuestionsTest test = tests[0];
+
+	    AssignTest assignTest = new AssignTest();
+	    assignTest.setEmployeeId(employee.getEmployeeId());
+	    assignTest.setTestId(test.getTestId());
+	    assignTest.setQuestionId(test.getQuestionId());
+	    assignTest.setContent(test.getContent());
+	    assignTest.setOption1(test.getOption1());
+	    assignTest.setOption2(test.getOption2());
+	    assignTest.setOption3(test.getOption3());
+	    assignTest.setOption4(test.getOption4());
+	    assignTest.setMarks(test.getMarks());
+
+	    return assignTestRepository.save(assignTest);
 	}
 	
 	@Override
@@ -59,13 +80,11 @@ public class AssignTestServiceImpl implements AssignTestService {
 			throw new RuntimeException("Employee with ID " + employeeId + " not found.");
 		}
 		List<AssignTest> test = assignTestRepository.findByEmployeeId(employeeId);
+		
+		
 
 		EmployeeResponse response = new EmployeeResponse();
 		response.setEmployeeId(employee.getEmployeeId());
-		response.setFirstName(employee.getFirstName());
-		response.setLastName(employee.getLastName());
-		response.setEmail(employee.getEmail());
-		response.setPassword(employee.getPassword());
 		response.setAssignTests(test);
 
 		return response;
