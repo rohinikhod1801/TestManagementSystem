@@ -11,9 +11,6 @@ import com.bnt.exception.CategoryNotFoundException;
 import com.bnt.exception.DuplicateCategoryException;
 import com.bnt.repository.CategoryRepository;
 
-import jakarta.transaction.Transactional;
-
-@Transactional
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -81,7 +78,6 @@ public class CategoryServiceImpl implements CategoryService {
 	        throw new CategoryNotFoundException("Category with ID " + categoryId + " not found");
 	    }
 	}
-
 
 	private CategoryResponse convertToCategoryResponse(Categories category) {
 	    CategoryResponse updateCategory = new CategoryResponse();

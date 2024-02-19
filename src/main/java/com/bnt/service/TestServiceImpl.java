@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bnt.entity.TestResponse;
 import com.bnt.entity.Tests;
 import com.bnt.exception.TestIdNotExistException;
+import com.bnt.repository.QuestionTestRepository;
 import com.bnt.repository.TestRepository;
 
 import jakarta.transaction.Transactional;
@@ -19,10 +20,10 @@ public class TestServiceImpl implements TestService {
 
 	@Autowired
 	private TestRepository testRepository;
+	
+	@Autowired
+	QuestionTestRepository questionTestRepository;
 
-	/*
-	 * @Autowired private ModelMapper mapper;
-	 */
 	@Override
 	public Tests addTest(Tests test) {
 		return testRepository.save(test);
@@ -34,7 +35,7 @@ public class TestServiceImpl implements TestService {
 		List<TestResponse> testList = new ArrayList<>();
 
 		for (Tests test : tests) {
-			testList.add(test.toResponse());
+			//testList.add(test);
 		}
 
 		return testList;
@@ -79,17 +80,6 @@ public class TestServiceImpl implements TestService {
 		} else {
 			throw new TestIdNotExistException("test with ID " + testId + " not found");
 		}
-	}
-
-	private TestResponse convertToCategoryResponse(Tests test) {
-		TestResponse response = new TestResponse();
-		response.setTitle(test.getTitle());
-		response.setDescription(test.getDescription());
-		response.setMaxMarks(test.getMaxMarks());
-		response.isActive();
-		response.setNumberofQuestions(test.getNumberOfQuestions());
-		response.setQuestionIds(test.getQuestions());
-		return response;
 	}
 
 }

@@ -1,14 +1,9 @@
 package com.bnt.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,10 +19,6 @@ public class Tests {
 	private int maxMarks;
 	private int numberOfQuestions;
 	private boolean active = false;
-
-	@ManyToMany
-	@JoinTable(name = "question_test", joinColumns = @JoinColumn(name = "test_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
-	private List<Questions> questions;
 
 	public Tests() {
 		super();
@@ -91,18 +82,6 @@ public class Tests {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-	public List<Questions> getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(List<Questions> questions) {
-		this.questions = questions;
-	}
-
-	public TestResponse toResponse() {
-		return new TestResponse(title, description, maxMarks, numberOfQuestions, active, questions);
 	}
 
 }

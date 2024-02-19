@@ -36,10 +36,6 @@ public class Questions {
     @JoinColumn(name = "category_id")
     private Categories category;
 
-    @JsonIgnore
-	@ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL)
-	private List<Tests> tests;
-
 	public Questions() {
 		super();
 	}
@@ -126,21 +122,6 @@ public class Questions {
 	        throw new IllegalArgumentException("Category cannot be null");
 	    }
 		this.category = category;
-	}
-
-	public List<Tests> getTests() {
-		return tests;
-	}
-
-	public void setTests(List<Tests> tests) {
-		this.tests = tests;
-	}
-
-	@Override
-	public String toString() {
-		return "Questions [questionId=" + questionId + ", content=" + content + ", option1=" + option1 + ", option2="
-				+ option2 + ", option3=" + option3 + ", option4=" + option4 + ", answer=" + answer + ", marks=" + marks
-				+ ", category=" + category + ", tests=" + tests + "]";
 	}
 
 	public QuestionsResponse toResponse() {

@@ -2,6 +2,7 @@ package com.bnt.service;
 
 import java.util.List;
 
+import com.bnt.entity.QuestionsTest;
 import com.bnt.entity.TestResponse;
 import com.bnt.entity.Tests;
 
@@ -16,6 +17,5 @@ public interface TestService {
 	public Tests updateTest(Tests test);
 
 	public void deleteTest(Long testId);
-	
-	//public TestResponse findAddressByEmployeeId(int employeeId);
+
 }

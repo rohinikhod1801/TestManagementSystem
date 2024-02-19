@@ -6,7 +6,7 @@ import com.bnt.entity.Categories;
 import com.bnt.entity.CategoryResponse;
 
 public interface CategoryService {
-	
+
 	public Categories addNewCategory(Categories category);
 
 	public List<CategoryResponse> getAllCatogory();
@@ -16,8 +16,5 @@ public interface CategoryService {
 	public CategoryResponse updateCategory(Categories category);
 
 	public void deleteCategory(Long categoryId);
-
-	
-	
 
 }
