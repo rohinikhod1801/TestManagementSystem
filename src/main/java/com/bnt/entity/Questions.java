@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -22,7 +21,7 @@ public class Questions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionId;
+    private Long question_id;
 
     private String content;
     private String option1;
@@ -32,20 +31,33 @@ public class Questions {
     private String answer;
     private String marks;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Categories category;
+    
+    @JsonIgnore
+    @ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    private List<Tests> tests;
+
+	public List<Tests> getTests() {
+		return tests;
+	}
+
+	public void setTests(List<Tests> tests) {
+		this.tests = tests;
+	}
 
 	public Questions() {
 		super();
 	}
 
-	public Long getQuestionId() {
-		return questionId;
+	public Long getQuestion_id() {
+		return question_id;
 	}
 
-	public void setQuestionId(Long questionId) {
-		this.questionId = questionId;
+	public void setQuestion_id(Long question_id) {
+		this.question_id = question_id;
 	}
 
 	public String getContent() {
@@ -125,7 +137,7 @@ public class Questions {
 	}
 
 	public QuestionsResponse toResponse() {
-		return new QuestionsResponse(questionId, content, option1, option2, option3, option4, answer, marks);
+		return new QuestionsResponse(question_id, content, option1, option2, option3, option4, answer, marks);
 	}
 
 }

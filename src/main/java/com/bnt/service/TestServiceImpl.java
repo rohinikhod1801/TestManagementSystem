@@ -54,7 +54,7 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public Tests updateTest(Tests test) {
 		try {
-			Tests existingQuestion = testRepository.findById(test.getTestId())
+			Tests existingQuestion = testRepository.findById(test.getTest_id())
 					.orElseThrow(() -> new TestIdNotExistException("Question not found"));
 			existingQuestion.setTitle(test.getTitle());
 			existingQuestion.setDescription(test.getDescription());

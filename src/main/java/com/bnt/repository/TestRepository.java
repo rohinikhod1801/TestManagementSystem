@@ -8,5 +8,4 @@ import com.bnt.entity.Tests;
 @Repository
 public interface TestRepository extends JpaRepository<Tests, Long>{
 
-
 }

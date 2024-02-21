@@ -1,10 +1,15 @@
 package com.bnt.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 @Table(name = "tests")
@@ -12,7 +17,7 @@ public class Tests {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long testId;
+	private Long test_id;
 
 	private String title;
 	private String description;
@@ -20,17 +25,23 @@ public class Tests {
 	private int numberOfQuestions;
 	private boolean active = false;
 
+	@ManyToMany
+	@JoinTable(name = "questionsTest", joinColumns = @JoinColumn(name = "test_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
+	private List<Questions> questions;
+
 	public Tests() {
 		super();
 	}
 
-	public Long getTestId() {
-		return testId;
+	public Long getTest_id() {
+		return test_id;
 	}
 
-	public void setTestId(Long testId) {
-		this.testId = testId;
+
+	public void setTest_id(Long test_id) {
+		this.test_id = test_id;
 	}
+
 
 	public String getTitle() {
 		return title;
@@ -82,6 +93,14 @@ public class Tests {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public List<Questions> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Questions> questions) {
+		this.questions = questions;
 	}
 
 }

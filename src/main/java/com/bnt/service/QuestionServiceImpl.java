@@ -82,9 +82,9 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public QuestionsResponse updateQuestion(Questions request) {
 		try {
-			Questions existingQuestion = questionRepository.findById(request.getQuestionId())
+			Questions existingQuestion = questionRepository.findById(request.getQuestion_id())
 					.orElseThrow(() -> new QuestionNotFoundException("Question not found"));
-			existingQuestion.setQuestionId(request.getQuestionId());
+			existingQuestion.setQuestion_id(request.getQuestion_id());
 			existingQuestion.setContent(request.getContent());
 			existingQuestion.setOption1(request.getOption1());
 			existingQuestion.setOption2(request.getOption2());
@@ -110,7 +110,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 	private QuestionsResponse convertToCategoryResponse(Questions questions) {
 		QuestionsResponse response = new QuestionsResponse();
-		response.setQuestionId(questions.getQuestionId());
+		response.setQuestionId(questions.getQuestion_id());
 		response.setContent(questions.getContent());
 		response.setOption1(questions.getOption1());
 		response.setOption2(questions.getOption2());

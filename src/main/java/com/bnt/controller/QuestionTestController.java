@@ -1,11 +1,8 @@
 package com.bnt.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,19 +19,13 @@ public class QuestionTestController {
 	@Autowired
 	private AddQuestionTestService questionService;		
 		
-	@PostMapping("/{testId}/{questionId}")
-	public ResponseEntity<QuestionsTest> addQuestionToTest(@PathVariable("testId") Long testId,
-			@PathVariable("questionId") Long questionId) {
+	@PostMapping("/{test_id}/{question_id}")
+	public ResponseEntity<QuestionsTest> addQuestionToTest(@PathVariable("test_id") Long test_id,
+			@PathVariable("question_id") Long question_id) {
 
-		QuestionsTest updatedTest = questionService.addQuestionsById(testId, questionId);
+		QuestionsTest updatedTest = questionService.addQuestionsById(test_id, question_id);
 		return new ResponseEntity<>(updatedTest, HttpStatus.OK);
 
 	}
 	
-	@GetMapping("/{testId}")
-	private ResponseEntity<List<QuestionsTest>> getQuestionsByTestId(@PathVariable("testId") long testId) {
-		List<QuestionsTest> test = questionService.getEmployeeAssignTestList(testId);
-		return ResponseEntity.status(HttpStatus.OK).body(test);
-	}
-
 }
