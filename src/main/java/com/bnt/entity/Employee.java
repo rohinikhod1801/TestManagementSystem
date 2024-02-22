@@ -28,7 +28,6 @@ public class Employee {
 	@Column(name = "password")
 	private String password;
 	
-
 	public Employee() {
 		super();
 	}

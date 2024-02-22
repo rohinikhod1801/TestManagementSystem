@@ -12,7 +12,9 @@ import com.bnt.repository.EmployeeRepository;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+	
 	private EmployeeRepository employeeRepository;
+	
 
 	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
 		super();
@@ -71,5 +73,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeRepository.delete(employee);
 		return employee;
 	}
-
+	
 }
