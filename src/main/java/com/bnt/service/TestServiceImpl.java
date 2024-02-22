@@ -1,28 +1,19 @@
 package com.bnt.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bnt.entity.TestResponse;
 import com.bnt.entity.Tests;
 import com.bnt.exception.TestIdNotExistException;
-import com.bnt.repository.QuestionTestRepository;
 import com.bnt.repository.TestRepository;
 
-import jakarta.transaction.Transactional;
-
-@Transactional
 @Service
 public class TestServiceImpl implements TestService {
 
 	@Autowired
 	private TestRepository testRepository;
-	
-	@Autowired
-	QuestionTestRepository questionTestRepository;
 
 	@Override
 	public Tests addTest(Tests test) {
@@ -30,15 +21,8 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public List<TestResponse> getAllTest() {
-		List<Tests> tests = testRepository.findAll();
-		List<TestResponse> testList = new ArrayList<>();
-
-		for (Tests test : tests) {
-			//testList.add(test);
-		}
-
-		return testList;
+	public List<Tests> getAllTest() {
+		return testRepository.findAll();
 	}
 
 	@Override
@@ -62,8 +46,7 @@ public class TestServiceImpl implements TestService {
 			existingQuestion.isActive();
 			existingQuestion.setNumberOfQuestions(test.getNumberOfQuestions());
 
-			Tests response = testRepository.save(existingQuestion);
-			return response;
+			return testRepository.save(existingQuestion);
 		} catch (Exception e) {
 			throw new TestIdNotExistException("Failed to update question" + e);
 		}

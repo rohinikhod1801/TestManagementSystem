@@ -2,10 +2,13 @@ package com.bnt.entity;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class TestResponse {
 	
 	private Long testId;
-    private List<QuestionsTest> questionIds;
+    private List<Questions> questionIds;
 	   
 	public Long getTestId() {
 		return testId;
@@ -15,11 +18,11 @@ public class TestResponse {
 		this.testId = testId;
 	}
 
-	public List<QuestionsTest> getQuestionIds() {
+	public List<Questions> getQuestionIds() {
 		return questionIds;
 	}
 
-	public void setQuestionIds(List<QuestionsTest> questionIds) {
+	public void setQuestionIds(List<Questions> questionIds) {
 		this.questionIds = questionIds;
 	}
 	

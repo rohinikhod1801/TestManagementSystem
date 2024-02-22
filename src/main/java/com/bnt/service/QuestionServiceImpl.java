@@ -21,9 +21,6 @@ import com.bnt.exception.QuestionNotFoundException;
 import com.bnt.repository.CategoryRepository;
 import com.bnt.repository.QuestionRepository;
 
-import jakarta.transaction.Transactional;
-
-@Transactional
 @Service
 public class QuestionServiceImpl implements QuestionService {
 

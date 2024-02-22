@@ -18,11 +18,11 @@ public class QuestionsTest {
 
 	@ManyToOne
     @JoinColumn(name = "test_id")
-    private Tests tests;
+    public Tests tests;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    private Questions Questions;
+    public Questions Questions;
 
 	public Long getQuestionTestId() {
 		return questionTestId;
@@ -47,6 +47,4 @@ public class QuestionsTest {
 	public void setQuestions(Questions questions) {
 		Questions = questions;
 	}
-
-    
 }

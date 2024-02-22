@@ -1,8 +1,11 @@
 package com.bnt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,11 @@ public class QuestionTestController {
 		QuestionsTest updatedTest = questionService.addQuestionsById(test_id, question_id);
 		return new ResponseEntity<>(updatedTest, HttpStatus.OK);
 
+	}
+	
+	@GetMapping
+	public List<QuestionsTest> getAllQuestionsTest() {
+		return questionService.getQuestionsTestList();
 	}
 	
 }

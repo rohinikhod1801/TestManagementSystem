@@ -10,8 +10,18 @@ public class QuestionsResponse {
     private String option4;
     private String answer;
     private String marks;
+    private Long test_id;
+    
 
-    public QuestionsResponse() {
+    public Long getTest_id() {
+		return test_id;
+	}
+
+	public void setTest_id(Long test_id) {
+		this.test_id = test_id;
+	}
+
+	public QuestionsResponse() {
     }
 
     public QuestionsResponse(Long questionId, String content, String option1, String option2, String option3,

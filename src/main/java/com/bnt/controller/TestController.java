@@ -37,8 +37,8 @@ public class TestController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<TestResponse>> getAllTests() {
-		List<TestResponse> tests = testService.getAllTest();
+	public ResponseEntity<List<Tests>> getAllTests() {
+		List<Tests> tests = testService.getAllTest();
 		return new ResponseEntity<>(tests, HttpStatus.OK);
 	}
 
