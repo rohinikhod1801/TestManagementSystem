@@ -35,7 +35,7 @@ public class TestAssignController {
 	@Autowired
 	private TestRepository assignTestRepository;
 
-	private final WebClient webClient;
+	public WebClient webClient;
 
 	public TestAssignController(WebClient.Builder webClientBuilder) {
 		this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
