@@ -11,29 +11,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bnt.entity.QuestionsTest;
+import com.bnt.entity.QuestionsTests;
+import com.bnt.exception.QuestionNotFoundException;
 import com.bnt.service.AddQuestionTestService;
 
 @RestController
 @RequestMapping("/addQuestionsTest")
-public class QuestionTestController {
+public class QuestionTestsController {
 
 
 	@Autowired
 	private AddQuestionTestService questionService;		
 		
 	@PostMapping("/{test_id}/{question_id}")
-	public ResponseEntity<QuestionsTest> addQuestionToTest(@PathVariable("test_id") Long test_id,
+	public ResponseEntity<QuestionsTests> addQuestionToTest(@PathVariable("test_id") Long test_id,
 			@PathVariable("question_id") Long question_id) {
-
-		QuestionsTest updatedTest = questionService.addQuestionsById(test_id, question_id);
+		QuestionsTests updatedTest=new QuestionsTests();
+		try {
+			updatedTest = questionService.addQuestionsById(test_id, question_id);
+		} catch (QuestionNotFoundException e) {
+			throw new QuestionNotFoundException("Error occurred while adding new questions" + e);
+		}
 		return new ResponseEntity<>(updatedTest, HttpStatus.OK);
 
 	}
 	
 	@GetMapping
-	public List<QuestionsTest> getAllQuestionsTest() {
+	public List<QuestionsTests> getAllQuestionsTest() {
 		return questionService.getQuestionsTestList();
 	}
+
 	
 }

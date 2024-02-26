@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.bnt.entity.Questions;
-import com.bnt.entity.QuestionsTest;
+import com.bnt.entity.QuestionsTests;
 import com.bnt.entity.Tests;
 import com.bnt.repository.QuestionRepository;
 import com.bnt.repository.QuestionTestRepository;
@@ -29,13 +29,13 @@ public class AddQuestionTestServiceImpl implements AddQuestionTestService {
 	}
 
 	@Override
-	public QuestionsTest addQuestionsById(Long testId, Long questionId) {
+	public QuestionsTests addQuestionsById(Long testId, Long questionId) {
 
 		Questions question = questionRepository.findById(questionId).orElse(null);
 
 		Tests test = testRepository.findById(testId).orElse(null);
 
-		QuestionsTest questionTest = new QuestionsTest();
+		QuestionsTests questionTest = new QuestionsTests();
 		questionTest.setTests(test);
 		questionTest.setQuestions(question);
 
@@ -43,7 +43,7 @@ public class AddQuestionTestServiceImpl implements AddQuestionTestService {
 	}
 
 	@Override
-	public List<QuestionsTest> getQuestionsTestList() {
+	public List<QuestionsTests> getQuestionsTestList() {
 
 		return questionTestRepository.findAll();
 	}

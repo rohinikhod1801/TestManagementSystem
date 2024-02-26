@@ -2,12 +2,12 @@ package com.bnt.service;
 
 import java.util.List;
 
-import com.bnt.entity.QuestionsTest;
+import com.bnt.entity.QuestionsTests;
 
 public interface AddQuestionTestService {
 
-	public QuestionsTest addQuestionsById(Long testId, Long questionId);
-	public List<QuestionsTest> getQuestionsTestList();
+	public QuestionsTests addQuestionsById(Long testId, Long questionId);
+	public List<QuestionsTests> getQuestionsTestList();
 
 
 }
