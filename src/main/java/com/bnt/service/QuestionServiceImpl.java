@@ -13,7 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bnt.entity.Categories;
+import com.bnt.entity.Category;
 import com.bnt.entity.Questions;
 import com.bnt.entity.QuestionsResponse;
 import com.bnt.exception.CategoryNotFoundException;
@@ -35,10 +35,10 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public Questions addQuestionByName(Questions question) {
 
-		Categories category = categoryRepository.findByTitle(question.getCategory().getTitle())
+		Category category = categoryRepository.findByTitle(question.getCategory().getTitle())
 				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
 
-		Categories categeries = new Categories();
+		Category categeries = new Category();
 		categeries.setCategoryId(category.getCategoryId());
 
 		Questions questionRequest = new Questions();
@@ -148,8 +148,8 @@ public class QuestionServiceImpl implements QuestionService {
 				String mark = String.valueOf(row.getCell(6));
 				String title = String.valueOf(row.getCell(7));
 
-				Categories category = categoryRepository.findByTitle(title)
-						.orElseGet(() -> categoryRepository.save(new Categories(title)));
+				Category category = categoryRepository.findByTitle(title)
+						.orElseGet(() -> categoryRepository.save(new Category(title)));
 
 				Questions questionRequest = new Questions();
 				questionRequest.setContent(content);

@@ -2,7 +2,9 @@ package com.bnt.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.bnt.entity.Categories;
+import com.bnt.entity.Category;
 import com.bnt.entity.CategoryResponse;
 import com.bnt.exception.CategoryNotFoundException;
 import com.bnt.service.CategoryService;
@@ -33,8 +35,8 @@ public class CategoryControllerTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    public Categories categoryData() {
-		Categories category = new Categories();
+    public Category categoryData() {
+		Category category = new Category();
 		category.setCategoryId(1L);
 		category.setTitle("Spring Core");
 		category.setDescription("This is Spring Core Category Created");
@@ -44,24 +46,24 @@ public class CategoryControllerTest {
 	@Test
 	public void testAddNewCategory() {
 
-		Categories category = categoryData();
+		Category category = categoryData();
 
-		when(categoryService.addNewCategory(any(Categories.class))).thenReturn(category);
+		when(categoryService.addNewCategory(any(Category.class))).thenReturn(category);
 
-		Categories result = categoryController.addNewCategory(category);
+		Category result = categoryController.addNewCategory(category);
 
 		assertEquals(category, result);
 	}
 	
 	@Test
 	public void testGetAllCategory() {
-		List<CategoryResponse> mockCategories = new ArrayList<>();
-		Categories category = categoryData();
-		mockCategories.add(category.toResponse());
+		List<Category> mockCategories = new ArrayList<>();
+		Category category = categoryData();
+		mockCategories.add(category);
 
 		when(categoryService.getAllCatogory()).thenReturn(mockCategories);
 
-		List<CategoryResponse> result = categoryController.getAllCategory();
+		List<Category> result = categoryController.getAllCategory();
 
 		assertNotNull(result);
 		assertEquals(mockCategories, result);
@@ -71,8 +73,7 @@ public class CategoryControllerTest {
 	public void testGetCategoryById_Success() {
 
 		Long categoryId = 1L;
-		CategoryResponse mockCategory = new CategoryResponse(categoryId, "Spring Core",
-				"This is Spring Core Category Created");
+		Category mockCategory =  categoryData();
 		when(categoryService.getCategoryById(categoryId)).thenReturn(mockCategory);
 
 		ResponseEntity<?> result = categoryController.getCategoryById(categoryId);
@@ -84,15 +85,14 @@ public class CategoryControllerTest {
 	@Test
 	public void testUpdateCategory_Success() {
 
-		Categories categoryToUpdate = categoryData();
-		CategoryResponse mockUpdatedCategory = new CategoryResponse(1L, "Spring Core",
-				"This is Spring Core Category Created");
-		when(categoryService.updateCategory(categoryToUpdate)).thenReturn(mockUpdatedCategory);
+		Category categoryToUpdate = categoryData();
+	
+		when(categoryService.updateCategory(categoryToUpdate)).thenReturn(categoryToUpdate);
 
-		ResponseEntity<CategoryResponse> result = categoryController.updateCategory(categoryToUpdate);
+		ResponseEntity<Category> result = categoryController.updateCategory(categoryToUpdate);
 
 		assertEquals(HttpStatus.OK, result.getStatusCode());
-		assertEquals(mockUpdatedCategory, result.getBody());
+		assertEquals(categoryToUpdate, result.getBody());
 	}
 
 	@Test
@@ -119,12 +119,12 @@ public class CategoryControllerTest {
 	@Test
 	public void testUpdateCategory_CategoryNotFound() {
 
-		Categories categoryToUpdate = new Categories();
+		Category categoryToUpdate = new Category();
 		when(categoryService.updateCategory(categoryToUpdate))
 				.thenThrow(new CategoryNotFoundException("Category not found"));
 
 		try {
-			ResponseEntity<CategoryResponse> result = categoryController.updateCategory(categoryToUpdate);
+			ResponseEntity<Category> result = categoryController.updateCategory(categoryToUpdate);
 			assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
 		} catch (CategoryNotFoundException e) {
 

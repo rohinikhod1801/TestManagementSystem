@@ -2,18 +2,17 @@ package com.bnt.service;
 
 import java.util.List;
 
-import com.bnt.entity.Categories;
-import com.bnt.entity.CategoryResponse;
+import com.bnt.entity.Category;
 
 public interface CategoryService {
 
-	public Categories addNewCategory(Categories category);
+	public Category addNewCategory(Category category);
 
-	public List<CategoryResponse> getAllCatogory();
+	public List<Category> getAllCatogory();
 
-	public CategoryResponse getCategoryById(Long categoryId);
+	public Category getCategoryById(Long categoryId);
 
-	public CategoryResponse updateCategory(Categories category);
+	public Category updateCategory(Category category);
 
 	public void deleteCategory(Long categoryId);
 

@@ -9,7 +9,7 @@ class QuestionsTestsTest {
 	@Test
 	public void testCreateQuestionsTestsWithValidData() {
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setCategoryId(1L);
 		category.setTitle("Spring Core");
 		category.setDescription("This is Spring Core Category Created");

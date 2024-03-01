@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.bnt.entity.Categories;
+import com.bnt.entity.Category;
 import com.bnt.entity.Questions;
 import com.bnt.entity.QuestionsTests;
 import com.bnt.entity.Tests;
@@ -51,7 +51,7 @@ class AddQuestionTestServiceImplTest {
         test.setTest_id(1L);
         // Set test properties
 
-        Categories category = new Categories();   
+        Category category = new Category();   
         category.setTitle("Spring boot");
 
         Questions question = new Questions();

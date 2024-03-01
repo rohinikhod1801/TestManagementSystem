@@ -1,6 +1,7 @@
 package com.bnt.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -13,8 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.bnt.entity.Categories;
-import com.bnt.entity.CategoryResponse;
+import com.bnt.entity.Category;
 import com.bnt.exception.CategoryNotFoundException;
 import com.bnt.repository.CategoryRepository;
 
@@ -27,8 +27,8 @@ class CategoryServiceImplTest {
 	@InjectMocks
 	private CategoryServiceImpl categoryService;
 
-	public Categories setCategoryRequest() {
-		Categories category = new Categories();
+	public Category setCategoryRequest() {
+		Category category = new Category();
 		category.setCategoryId(1L);
 		category.setTitle("Spring Core");
 		category.setDescription("This is Spring Core Category Created");
@@ -40,32 +40,32 @@ class CategoryServiceImplTest {
 	@Test
 	public void testAddNewCategory() {
 
-		Categories inputCategory = setCategoryRequest();
+		Category inputCategory = setCategoryRequest();
 		when(categoryRepository.save(any())).thenReturn(inputCategory);
-		Categories result = categoryService.addNewCategory(inputCategory);
+		Category result = categoryService.addNewCategory(inputCategory);
 		assertEquals(inputCategory, result);
 	}
 
 	@Test
 	public void testGetAllCategory() {
 
-		Categories inputCategory = setCategoryRequest();
-		List<Categories> categories = new ArrayList<>();
+		Category inputCategory = setCategoryRequest();
+		List<Category> categories = new ArrayList<>();
 		categories.add(inputCategory);
 		when(categoryRepository.findAll()).thenReturn(categories);
-		List<CategoryResponse> result = categoryService.getAllCatogory();
+		List<Category> result = categoryService.getAllCatogory();
 		assertEquals(categories.size(), result.size());
 	}
 
 	@Test
 	public void testGetCategoryById() {
 		Long categoryId = 1L;
-		Categories category = setCategoryRequest();
+		Category category = setCategoryRequest();
 		when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
-		CategoryResponse result = categoryService.getCategoryById(categoryId);
+		Category result = categoryService.getCategoryById(categoryId);
 		assertEquals(categoryId, result.getCategoryId());
-		assertEquals("Spring Core", result.getCategoryName());
-		assertEquals("This is Spring Core Category Created", result.getDecription());
+		assertEquals("Spring Core", result.getTitle());
+		assertEquals("This is Spring Core Category Created", result.getDescription());
 	}
 
 	@Test
@@ -81,24 +81,24 @@ class CategoryServiceImplTest {
 	public void testUpdateCategory() {
 
 		Long categoryId = 1L;
-		Categories inputCategory = new Categories();
+		Category inputCategory = new Category();
 		inputCategory.setCategoryId(categoryId);
 		inputCategory.setTitle("UpdatedTitle");
 		inputCategory.setDescription("UpdatedDescription");
-		Categories existingCategory = setCategoryRequest();
+		Category existingCategory = setCategoryRequest();
 		when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(existingCategory));
 		when(categoryRepository.save(any())).thenReturn(inputCategory);
-		CategoryResponse result = categoryService.updateCategory(inputCategory);
+		Category result = categoryService.updateCategory(inputCategory);
 
 		assertEquals(categoryId, result.getCategoryId());
-		assertEquals(inputCategory.getTitle(), result.getCategoryName());
-		assertEquals(inputCategory.getDescription(), result.getDecription());
+		assertEquals(inputCategory.getTitle(), result.getTitle());
+		assertEquals(inputCategory.getDescription(), result.getDescription());
 	}
 
 	@Test
 	public void testUpdateCategory_NotFound() {
 		Long categoryId = 1L;
-		Categories inputCategory = new Categories();
+		Category inputCategory = new Category();
 		when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 		assertThrows(CategoryNotFoundException.class, () -> {
 			categoryService.updateCategory(inputCategory);

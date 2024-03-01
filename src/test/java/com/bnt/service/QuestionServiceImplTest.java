@@ -22,7 +22,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 
-import com.bnt.entity.Categories;
+import com.bnt.entity.Category;
 import com.bnt.entity.Questions;
 import com.bnt.entity.QuestionsResponse;
 import com.bnt.exception.QuestionNotFoundException;
@@ -61,7 +61,7 @@ class QuestionServiceImplTest {
 		question.setAnswer("Independant easy to understand");
 		question.setMarks("100");
 
-		Categories category = new Categories();
+		Category category = new Category();
 		category.setTitle("Advance java Test");
 		question.setCategory(category);
 		return question;
@@ -72,7 +72,7 @@ class QuestionServiceImplTest {
 	public void testAddQuestion() {
 
 		Questions question = setAddQuestionRequest();
-		Categories category = question.getCategory();
+		Category category = question.getCategory();
 		when(categoryRepository.findByTitle(category.getTitle())).thenReturn(Optional.of(category));
 
 		questionService.addQuestionByName(question);
@@ -161,7 +161,7 @@ class QuestionServiceImplTest {
 	@Test
 	public void testImportQuestionsFromExcelSuccess() throws IOException {
 		try {
-			when(categoryRepository.findByTitle(anyString())).thenReturn(java.util.Optional.of(new Categories()));
+			when(categoryRepository.findByTitle(anyString())).thenReturn(java.util.Optional.of(new Category()));
 			when(questionRepository.saveAll(any())).thenReturn(Collections.emptyList());
 			questionService.importQuestionsFromExcel(Collections.singletonList(validExcelFile));
 			verify(questionRepository, times(1)).saveAll(anyList());

@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bnt.entity.Categories;
+import com.bnt.entity.Category;
 import com.bnt.entity.Questions;
 import com.bnt.entity.QuestionsResponse;
 import com.bnt.service.QuestionService;
@@ -39,7 +39,7 @@ class QuestionControllerTest {
 	    }
 
 	    public Questions setAddQuestionRequest() {
-			Categories category = new Categories();
+			Category category = new Category();
 			
 			category.setTitle("Spring boot");
 			

@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "category")
-public class Categories {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,11 +29,11 @@ public class Categories {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Questions> questions;
 
-	public Categories() {
+	public Category() {
 		super();
 	}
 
-	public Categories(String title) {
+	public Category(String title) {
 		super();
 		this.title = title;
 	}

@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bnt.entity.Categories;
-import com.bnt.entity.CategoryResponse;
+import com.bnt.entity.Category;
 import com.bnt.exception.CategoryNotFoundException;
 import com.bnt.service.CategoryService;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/testmanagement/api/v1/categories")
 public class CategoryController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
@@ -30,26 +29,26 @@ public class CategoryController {
 	private CategoryService service;
 
 	@PostMapping
-	public Categories addNewCategory(@RequestBody Categories category) {
+	public Category addNewCategory(@RequestBody Category category) {
 
-		Categories addcategory = service.addNewCategory(category);
+		Category addcategory = service.addNewCategory(category);
 		logger.info("Added a new category: {}", category);
 		return addcategory;
 
 	}
 
 	@GetMapping
-	public List<CategoryResponse> getAllCategory() {
+	public List<Category> getAllCategory() {
 
-		List<CategoryResponse> showCategories = service.getAllCatogory();
+		List<Category> showCategories = service.getAllCatogory();
 		logger.info("Getting all categories: {}", showCategories.toString());
 		return showCategories;
 	}
 
 	@GetMapping("/{category_id}")
-	public ResponseEntity<?> getCategoryById(@PathVariable("category_id") Long categoryId) {
+	public ResponseEntity<Category> getCategoryById(@PathVariable("category_id") Long categoryId) {
 		try {
-			CategoryResponse category = service.getCategoryById(categoryId);
+			Category category = service.getCategoryById(categoryId);
 			logger.info("Getting category by ID: {}", category);
 			return ResponseEntity.ok(category);
 		} catch (CategoryNotFoundException ex) {
@@ -59,9 +58,9 @@ public class CategoryController {
 	}
 
 	@PutMapping
-	public ResponseEntity<CategoryResponse> updateCategory(@RequestBody Categories category) {
+	public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
 		try {
-			CategoryResponse updatedCategory = service.updateCategory(category);
+			Category updatedCategory = service.updateCategory(category);
 			return ResponseEntity.ok(updatedCategory);
 		} catch (CategoryNotFoundException e) {
 			logger.error("Error occurred while updating category", e);

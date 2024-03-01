@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class CategoriesTest {
+class CategoryTest {
 
 	//This is Positive Test Case
 		@Test
 		public void testCategoryModel() {
 
-			Categories category = new Categories();
+			Category category = new Category();
 			category.setTitle("Spring Core");
 			category.setDescription("This is Spring Core Category Created");
 
@@ -23,7 +23,7 @@ class CategoriesTest {
 		@Test
 		public void testCategoryModelWithNullDescription() {
 		    try {
-		        Categories category = new Categories();
+		        Category category = new Category();
 		        category.setTitle("Spring Core");
 		        category.setDescription(null);
 		        
@@ -36,7 +36,7 @@ class CategoriesTest {
 		@Test
 		public void testCategoryModelWithBlankDescription() {
 		    try {
-		        Categories category = new Categories();
+		        Category category = new Category();
 		        category.setTitle("Test Category");
 		        category.setDescription("   "); 
 		    } catch (IllegalArgumentException e) {
