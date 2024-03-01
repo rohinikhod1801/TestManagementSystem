@@ -25,19 +25,19 @@ import com.bnt.repository.TestRepository;
 
 @RestController
 @RequestMapping("/assignTests")
-public class TestAssignController {
+public class TestsAssignController {
 
-	private static final Logger logger = LoggerFactory.getLogger(TestAssignController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestsAssignController.class);
+
+	@Autowired 
+	public EmployeeRepository employeeRepository;
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
-
-	@Autowired
-	private TestRepository assignTestRepository;
+	public TestRepository assignTestRepository;
 
 	public WebClient webClient;
 
-	public TestAssignController(WebClient.Builder webClientBuilder) {
+	public TestsAssignController(WebClient.Builder webClientBuilder) {
 		this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
 	}
 
@@ -48,7 +48,6 @@ public class TestAssignController {
 		try {
 
 			if (employeeRepository.existsById(employeeId)) {
-
 				assignTest.setEmployeeId(employeeId);
 				assignTest.setTestId(test_id);
 				logger.info("Getting employee by ID: {}", assignTest.toString());
