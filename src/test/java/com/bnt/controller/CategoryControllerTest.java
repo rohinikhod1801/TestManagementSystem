@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.bnt.entity.Category;
-import com.bnt.entity.CategoryResponse;
 import com.bnt.exception.CategoryNotFoundException;
 import com.bnt.service.CategoryService;
 
@@ -50,9 +49,9 @@ public class CategoryControllerTest {
 
 		when(categoryService.addNewCategory(any(Category.class))).thenReturn(category);
 
-		Category result = categoryController.addNewCategory(category);
+		ResponseEntity<Category> result = categoryController.addNewCategory(category);
 
-		assertEquals(category, result);
+		assertEquals(category, result.getBody());
 	}
 	
 	@Test
@@ -61,7 +60,7 @@ public class CategoryControllerTest {
 		Category category = categoryData();
 		mockCategories.add(category);
 
-		when(categoryService.getAllCatogory()).thenReturn(mockCategories);
+		when(categoryService.getAllCategory()).thenReturn(mockCategories);
 
 		List<Category> result = categoryController.getAllCategory();
 
