@@ -53,7 +53,7 @@ class CategoryServiceImplTest {
 		List<Category> categories = new ArrayList<>();
 		categories.add(inputCategory);
 		when(categoryRepository.findAll()).thenReturn(categories);
-		List<Category> result = categoryService.getAllCatogory();
+		List<Category> result = categoryService.getAllCategory();
 		assertEquals(categories.size(), result.size());
 	}
 

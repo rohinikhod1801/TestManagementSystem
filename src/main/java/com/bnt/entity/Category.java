@@ -32,6 +32,13 @@ public class Category {
 	public Category() {
 		super();
 	}
+	
+	public Category(String title, String description) {
+		super();
+		this.title = title;
+		this.description = description;
+	}
+
 
 	public Category(String title) {
 		super();

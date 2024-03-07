@@ -8,7 +8,7 @@ public interface CategoryService {
 
 	public Category addNewCategory(Category category);
 
-	public List<Category> getAllCatogory();
+	public List<Category> getAllCategory();
 
 	public Category getCategoryById(Long categoryId);
 
