@@ -1,7 +1,6 @@
 package com.bnt.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +19,6 @@ import com.bnt.entity.Category;
 import com.bnt.exception.CategoryNotFoundException;
 import com.bnt.service.CategoryService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/testmanagement/api/v1/categories")
 public class CategoryController {
@@ -32,48 +29,56 @@ public class CategoryController {
 	private CategoryService service;
 
 	@PostMapping
-	public ResponseEntity<Category> addNewCategory(@Valid @RequestBody Category category) {
-		return Optional.ofNullable(service.addNewCategory(category)).map(addCategory -> {
-			logger.info("Added a new category: {}", addCategory);
-			return ResponseEntity.ok(addCategory);
-		}).orElseGet(() -> {
-			logger.error("Failed to add a new category.");
-			return ResponseEntity.badRequest().build();
-		});
+	public Category addNewCategory(@RequestBody Category category) {
+
+		Category addcategory = service.addNewCategory(category);
+		logger.info("Added a new category: {}", category);
+		return addcategory;
+
 	}
 
-	@GetMapping("/get")
+	@GetMapping
 	public List<Category> getAllCategory() {
-		List<Category> showCategories = service.getAllCategory();
-		logger.info("Getting all categories: {}", showCategories);
-		showCategories.forEach(category -> logger.info("Category: {}", category));
+
+		List<Category> showCategories = service.getAllCatogory();
+		logger.info("Getting all categories: {}", showCategories.toString());
 		return showCategories;
 	}
 
 	@GetMapping("/{category_id}")
 	public ResponseEntity<Category> getCategoryById(@PathVariable("category_id") Long categoryId) {
-		return Optional.ofNullable(service.getCategoryById(categoryId)).map(category -> {
+		try {
+			Category category = service.getCategoryById(categoryId);
 			logger.info("Getting category by ID: {}", category);
 			return ResponseEntity.ok(category);
-		}).orElseThrow(() -> {
-			logger.error("Category not found with ID: {}", categoryId);
-			return new CategoryNotFoundException("Category not found with ID: " + categoryId);
-		});
+		} catch (CategoryNotFoundException ex) {
+			logger.error("Category not found with ID: {}", categoryId, ex);
+			throw new CategoryNotFoundException("Error occurred while getById category" + ex);
+		}
 	}
 
 	@PutMapping
 	public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
-		return Optional.ofNullable(service.updateCategory(category))
-				.map(updatedCategory -> ResponseEntity.ok(updatedCategory)).orElseThrow(() -> {
-					logger.error("Error occurred while updating category");
-					return new CategoryNotFoundException("Error occurred while updating category");
-				});
+		try {
+			Category updatedCategory = service.updateCategory(category);
+			return ResponseEntity.ok(updatedCategory);
+		} catch (CategoryNotFoundException e) {
+			logger.error("Error occurred while updating category", e);
+			throw new CategoryNotFoundException("Error occurred while updating category" + e);
+		}
 	}
 
 	@DeleteMapping("/{category_id}")
 	public ResponseEntity<?> deleteCategory(@PathVariable("category_id") Long categoryId) {
-	    service.deleteCategory(categoryId);
-	    logger.info("Deleting category with ID: {}", categoryId);
-	    return ResponseEntity.ok().build();
+		try {
+			logger.info("Deleting category with ID: {}", categoryId);
+			this.service.deleteCategory(categoryId);
+			return ResponseEntity.ok().build();
+		} catch (CategoryNotFoundException ex) {
+			logger.error("Category not found with ID: {}", categoryId, ex);
+			throw new CategoryNotFoundException("Error occurred while Deleting category" + ex);
+		}
+
 	}
+
 }
